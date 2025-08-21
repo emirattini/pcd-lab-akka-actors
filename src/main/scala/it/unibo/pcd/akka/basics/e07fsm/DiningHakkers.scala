@@ -175,7 +175,7 @@ object DiningHakkers:
   def apply(): Behavior[NotUsed] = Behaviors.setup: context =>
     // Create 5 chopsticks
     val chopsticks =
-      for (i <- 1 to totalChopsticks)
+      for (i <- 1 to totalChopsticks) 
         yield context.spawn(Chopstick(), "Chopstick" + i)
 
     // Create 5 awesome hakkers and assign them their left and right chopstick

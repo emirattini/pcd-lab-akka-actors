@@ -16,6 +16,7 @@ class PingPonger(context: ActorContext[PingPong], var bounces: Int = 10) extends
 
   override def onMessage(msg: PingPong): Behavior[PingPong] =
     bounces -= 1
+    Thread.sleep(500)
     if (bounces < 0)
       context.log.info("I got tired of pingpong-ing. Bye bye.")
       Behaviors.stopped
@@ -30,7 +31,7 @@ class PingPonger(context: ActorContext[PingPong], var bounces: Int = 10) extends
       this
 
 object PingPongMainSimple extends App:
-  val system = ActorSystem[PingPong](Behaviors.setup(new PingPonger(_)), "ping-pong")
+  val system = ActorSystem[PingPong](Behaviors.setup(ctx => new PingPonger(ctx)), "ping-pong")
   system ! Ping(system)
 
 /** Concepts:

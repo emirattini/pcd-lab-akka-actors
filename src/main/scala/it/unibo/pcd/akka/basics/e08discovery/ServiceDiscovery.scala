@@ -67,6 +67,7 @@ object Printer:
     "discovery-check"
   )
   Thread.sleep(300)
+  println("Sending Start...")
   system ! Command.Start
   Thread.sleep(500)
   system.terminate()

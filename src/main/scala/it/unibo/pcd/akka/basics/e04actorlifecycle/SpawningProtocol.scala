@@ -20,5 +20,6 @@ object SpawningProtocol extends App:
 
   def pongerBehavior: Behavior[Ping.type] = Behaviors.receive[Ping.type]: (ctx, _) =>
     ctx.log.info("pong"); Behaviors.stopped
-  val ponger: Future[ActorRef[Ping.type]] = system.ask(SpawnProtocol.Spawn(pongerBehavior, "ponger", Props.empty, _))
+  val ponger: Future[ActorRef[Ping.type]] =
+    system.ask(replyTo => SpawnProtocol.Spawn(pongerBehavior, "ponger", Props.empty, replyTo))
   for (pongerRef <- ponger) pongerRef ! Ping

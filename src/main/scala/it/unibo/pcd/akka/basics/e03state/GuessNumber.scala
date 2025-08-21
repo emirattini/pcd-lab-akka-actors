@@ -41,7 +41,7 @@ object GuessGame:
                 remainingAttempts
               )
           )
-          if numberOfAttempts - 1 > 0 then game(numberToGuess, remainingAttempts)
+          if remainingAttempts > 0 then game(numberToGuess, remainingAttempts)
           else
             context.log.info("You finished your attempts. Game ends here.")
             Behaviors.stopped
@@ -98,8 +98,8 @@ object GuessNumberMain extends App:
       context.log.info("Starting a game.")
       val game = context.spawn(GuessGame.game(scala.util.Random.nextInt(100), numberOfAttempts = 5), "guess-listener")
       val player = context.spawn(
-        // GuessGame.humanPlayer(game),
-        GuessGame.randomPlayer(game, 0, 100),
+         GuessGame.humanPlayer(game),
+//        GuessGame.randomPlayer(game, 0, 100),
         "user"
       )
       player ! GuessGame.NewInput
